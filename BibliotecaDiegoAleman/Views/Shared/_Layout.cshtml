@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BibliotecaDiegoAleman</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BibliotecaDiegoAleman.styles.css" asp-append-version="true" />
+    <style>
+        /* Estilos para el Sidebar */
+        #sidebar {
+            width: 250px;
+            position: fixed;
+            left: -250px;
+            top: 0;
+            height: 100%;
+            background: #343a40;
+            color: white;
+            padding-top: 20px;
+            transition: all 0.3s;
+        }
+
+            #sidebar a {
+                color: white;
+                padding: 10px 20px;
+                display: block;
+                text-decoration: none;
+            }
+
+                #sidebar a:hover {
+                    background: #495057;
+                }
+
+        /* Ajuste del contenido */
+        #content {
+            transition: margin-left 0.3s;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 25px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <!-- Botón para abrir el sidebar -->
+                <button class="btn btn-dark me-3" onclick="toggleSidebar()">☰</button>
+
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BibliotecaDiegoAleman</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <span class="close-btn" onclick="toggleSidebar()">✖</span>
+        <h4 class="text-center">Menú</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a asp-controller="Home" asp-action="Index">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Usuario" asp-action="Usuarios">Usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Admin" asp-action="Configuracion">Configuración</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container" id="content">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - BibliotecaDiegoAleman - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        function toggleSidebar() {
+            let sidebar = document.getElementById("sidebar");
+            let content = document.getElementById("content");
+
+            if (sidebar.style.left === "-250px") {
+                sidebar.style.left = "0";
+                content.style.marginLeft = "250px";
+            } else {
+                sidebar.style.left = "-250px";
+                content.style.marginLeft = "0";
+            }
+        }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
